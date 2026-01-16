@@ -13,7 +13,7 @@ from termcolor import colored
 import os
 import json
 from datetime import date
-from notification_dialog import notify
+from .notification_dialog import notify
 
 
 def run(module_name: str, module_api_url: str, module_release_url: str) -> None:
