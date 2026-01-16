@@ -22,7 +22,7 @@ setup(
     author="TU Darmstadt and Iowa State University",
     author_email="discopop@lists.parallel.informatik.tu-darmstadt.de",
     description="The update notifier is a simple tool that allows "
-    "to check for available updates of DiscoPoP framework components.",
+    "to check for available updates of DiscoPoP framework components and notify a user of the results.",
     # long_description=open(SRC / "README.md").read(),
     long_description_content_type="text/markdown",
     install_requires=[

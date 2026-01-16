@@ -13,6 +13,7 @@ from termcolor import colored
 import os
 import json
 from datetime import date
+from notification_dialog import notify
 
 
 def run(module_name: str, module_api_url: str, module_release_url: str) -> None:
@@ -31,7 +32,7 @@ def run(module_name: str, module_api_url: str, module_release_url: str) -> None:
     if not automatic_updates_active(settings_file):
         return
     # update registered modules
-    check_for_updates(modules_file)
+    check_for_updates(modules_file, settings_file)
 
 
 def automatic_updates_active(settings_file: str) -> bool:
@@ -70,7 +71,7 @@ def setup_folder_structure(config_dir: str, auto_updater_dir: str, settings_file
     if not os.path.exists(auto_updater_dir):
         os.mkdir(auto_updater_dir)
     if not os.path.exists(settings_file):
-        settings = {"automatic_check_active": True}
+        settings = {"automatic_check_active": True, "enable_interactive_notifications": True}
         with open(settings_file, "w+") as f:
             json.dump(settings, f)
     if not os.path.exists(modules_file):
@@ -79,12 +80,17 @@ def setup_folder_structure(config_dir: str, auto_updater_dir: str, settings_file
             json.dump(modules, f)
 
 
-def check_for_updates(modules_file: str) -> None:
+def check_for_updates(modules_file: str, settings_file: str) -> None:
     print("Checking for updates..")
     # load registered modules
     modules: Dict[str, Dict[str, Any]] = dict()
     with open(modules_file, "r") as f:
         modules = json.load(f)
+    
+    # load settings
+    settings: Dict[str, Any] = dict()
+    with open(settings_file, "r") as f:
+        settings = json.load(f)
 
     for module in modules:
         print("--", module)
@@ -109,15 +115,8 @@ def check_for_updates(modules_file: str) -> None:
                 latest_version = latest_tag_name
             # compare semantic versioning
             if Version(latest_version) > Version(version):
-                print("\t" + colored("A newer version was found!", "yellow"))
-                print("\t" + colored("Installed: " + str(version), "yellow"))
-                print("\t" + colored("Latest:    " + str(latest_version), "yellow"))
-                print(
-                    "\t"
-                    + colored("Visit ", "yellow")
-                    + colored(modules[module]["release_url"], "yellow", attrs=["underline"])
-                    + colored(" to download the latest version.", "yellow")
-                )
+                notify(version, latest_version, modules[module]["release_url"], settings["enable_interactive_notifications"])
+                
                 modules[module]["last_result"] = (
                     "A newer version was found! Installed: "
                     + str(version)
@@ -134,7 +133,7 @@ def check_for_updates(modules_file: str) -> None:
             modules[module]["last_checked"] = str(date.today())
 
         except Exception as ex:
-            print("\t" + colored("failed with: " + str(ex), "yellow"))
+            print("\t" + colored("failed with: " + str(type(ex)) + ": " + str(ex), "yellow"))
 
     # write potentially updated modules to file
     tmp_modules_file = modules_file + ".tmp"
