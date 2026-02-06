@@ -52,7 +52,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: "Setup venv"
+
         run: |
+          echo "PWD: ${PWD}"
           python3 -m venv venv
   
   execute_format_check:
