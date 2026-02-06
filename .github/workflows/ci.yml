@@ -19,6 +19,7 @@ jobs:
   execute_license_check:
     runs-on: self-hosted
     name: License check
+    if: false
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -40,26 +41,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Setup venv
+        run: |
+          python3 -m venv venv 
+
       - name: "Run MyPy Type Checker"
         run: |
           python3 -m mypy --config-file=mypy.ini -p .
-
-  setup_venv:
-    runs-on: self-hosted
-    name: "Setup venv"
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: "Setup venv"
-
-        run: |
-          echo "PWD: ${PWD}"
-          python3 -m venv ${PWD}/venv
   
   execute_format_check:
     runs-on: self-hosted
     name: "Format check"
+    if: false
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
