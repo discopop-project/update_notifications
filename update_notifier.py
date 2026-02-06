@@ -86,7 +86,7 @@ def check_for_updates(modules_file: str, settings_file: str) -> None:
     modules: Dict[str, Dict[str, Any]] = dict()
     with open(modules_file, "r") as f:
         modules = json.load(f)
-    
+
     # load settings
     settings: Dict[str, Any] = dict()
     with open(settings_file, "r") as f:
@@ -115,8 +115,13 @@ def check_for_updates(modules_file: str, settings_file: str) -> None:
                 latest_version = latest_tag_name
             # compare semantic versioning
             if Version(latest_version) > Version(version):
-                notify(version, latest_version, modules[module]["release_url"], settings["enable_interactive_notifications"])
-                
+                notify(
+                    version,
+                    latest_version,
+                    modules[module]["release_url"],
+                    settings["enable_interactive_notifications"],
+                )
+
                 modules[module]["last_result"] = (
                     "A newer version was found! Installed: "
                     + str(version)

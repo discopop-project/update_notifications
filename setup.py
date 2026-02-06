@@ -10,7 +10,7 @@ import os
 import sys
 from pathlib import Path
 
-from setuptools import setup, find_packages  # type:ignore
+from setuptools import setup, find_packages  # type: ignore
 
 os.chdir(Path(__file__).parent)
 
@@ -25,19 +25,10 @@ setup(
     "to check for available updates of DiscoPoP framework components and notify a user of the results.",
     # long_description=open(SRC / "README.md").read(),
     long_description_content_type="text/markdown",
-    install_requires=[
-    "setuptools",
-    "packaging",
-    "requests",
-    "termcolor",
-    "mypy",
-    "black"
-    ],
-    extras_require={
-    },
+    install_requires=["setuptools", "packaging", "requests", "termcolor", "mypy", "black"],
+    extras_require={},
     python_requires=">=3.6",
-    entry_points={
-    },
+    entry_points={},
     zip_safe=True,
     classifiers=[
         "Development Status :: 4 - Beta",
