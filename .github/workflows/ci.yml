@@ -19,16 +19,9 @@ jobs:
   execute_license_check:
     runs-on: self-hosted
     name: License check
-    if: false
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-      - name: "Github SHA"
-        run: |
-          echo "Hello from: ${{ github.sha }}"
-
-      
 
       - name: "Check all files for DiscoPoP License tag"
         run: |
@@ -53,11 +46,15 @@ jobs:
   execute_format_check:
     runs-on: self-hosted
     name: "Format check"
-    if: false
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Setup venv
+        run: |
+          python3 -m venv venv 
+          venv/bin/pip install black
+
       - name: "Check formatting using black"
         run: |
-          python3 -m black -l 120 --check .
+          venv/bin/python3 -m black -l 120 --check .
