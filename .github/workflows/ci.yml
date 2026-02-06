@@ -40,16 +40,16 @@ jobs:
 
       - name: "Run MyPy Type Checker"
         run: |
-          python -m mypy --config-file=mypy.ini -p .
+          python3 -m mypy --config-file=mypy.ini -p .
 
   
   execute_format_check:
     runs-on: self-hosted
-    name: "Format check: Explorer"
+    name: "Format check"
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: "Check formatting using black"
         run: |
-          python -m black -l 120 --check .
+          python3 -m black -l 120 --check .
