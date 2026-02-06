@@ -48,7 +48,7 @@ jobs:
 
       - name: "Run MyPy Type Checker"
         run: |
-          venv/bin/python3 -m mypy --config-file=mypy.ini -p .
+          venv/bin/python3 -m mypy --config-file=mypy.ini .
   
   execute_format_check:
     runs-on: self-hosted
