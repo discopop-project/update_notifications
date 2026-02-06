@@ -55,7 +55,7 @@ jobs:
 
         run: |
           echo "PWD: ${PWD}"
-          python3 -m venv venv
+          python3 -m venv ${PWD}/venv
   
   execute_format_check:
     runs-on: self-hosted
