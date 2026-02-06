@@ -6,7 +6,7 @@
 # the 3-Clause BSD License.  See the LICENSE file in the package base
 # directory for details.
 
-from termcolor import colored
+from termcolor import colored  # type: ignore
 
 def notify(version: str, latest_version: str, release_url: str, enable_interactive_notifications: bool)->None:
     # try interactive notification
@@ -15,7 +15,7 @@ def notify(version: str, latest_version: str, release_url: str, enable_interacti
     notifiy_on_console(version, latest_version, release_url)
 
 
-def notify_interactively(version: str, latest_version: str, release_url: str, enable_interactive_notifications: bool):
+def notify_interactively(version: str, latest_version: str, release_url: str, enable_interactive_notifications: bool) -> None:
     # return True, if the interactive notification was successful
     # return False otherwise
     # check if interactive notifications are enables

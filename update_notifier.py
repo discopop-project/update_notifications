@@ -8,8 +8,8 @@
 from typing import Any, Dict, List
 import requests  # type: ignore
 import pkg_resources  # type: ignore
-from packaging.version import Version
-from termcolor import colored
+from packaging.version import Version  # type: ignore
+from termcolor import colored  # type: ignore
 import os
 import json
 from datetime import date
