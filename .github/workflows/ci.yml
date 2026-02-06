@@ -1,0 +1,55 @@
+# This file is part of the DiscoPoP software (http://www.discopop.tu-darmstadt.de)
+#
+# Copyright (c) 2020, Technische Universitaet Darmstadt, Germany
+#
+# This software may be modified and distributed under the terms of
+# the 3-Clause BSD License.  See the LICENSE file in the package base
+# directory for details.
+
+name: "DiscoPoP CI"
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  execute_license_check:
+    runs-on: self-hosted
+    name: License check
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: "Github SHA"
+        run: |
+          echo "Hello from: ${{ github.sha }}"
+
+      - name: "Check all files for DiscoPoP License tag"
+        run: |
+          ./scripts/dev/check-license.sh $(find . -type f)
+
+  execute_type_check:
+    runs-on: self-hosted
+    name: Type check
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: "Run MyPy Type Checker"
+        run: |
+          python -m mypy --config-file=mypy.ini -p .
+
+  
+  execute_format_check:
+    runs-on: self-hosted
+    name: "Format check: Explorer"
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: "Check formatting using black"
+        run: |
+          python -m black -l 120 --check .

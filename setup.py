@@ -30,6 +30,8 @@ setup(
     "packaging",
     "requests",
     "termcolor",
+    "mypy",
+    "black"
     ],
     extras_require={
     },
